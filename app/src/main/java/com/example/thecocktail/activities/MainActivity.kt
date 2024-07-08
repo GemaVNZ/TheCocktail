@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("COCKTAIL_ID", cocktail.id)
         intent.putExtra("COCKTAIL_NAME", cocktail.name)
-        intent.putExtra("SUPERHERO_IMAGE", cocktail.imageURL)
+        intent.putExtra("COCKTAIL_IMAGE", cocktail.imageURL)
         startActivity(intent)
 
     }

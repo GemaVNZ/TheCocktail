@@ -6,9 +6,18 @@ import android.view.MenuItem
 import com.example.thecocktail.R
 
 class DetailActivity : AppCompatActivity() {
+    companion object {
+        const val EXTRA_ID = "COCKTAIL_ID"
+        const val EXTRA_NAME = "COCKTAIL_NAME"
+        const val EXTRA_IMAGE = "COCKTAIL_IMAGE"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+
     }
 
 

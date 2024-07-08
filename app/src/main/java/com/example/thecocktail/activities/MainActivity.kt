@@ -4,12 +4,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.thecocktail.R
 import com.example.thecocktail.adapters.CocktailAdapter
 import com.example.thecocktail.data.Cocktail
+import com.example.thecocktail.data.CocktailAPICall
 import com.example.thecocktail.databinding.ActivityMainBinding
+import com.example.thecocktail.utils.RetrofitProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-                    TODO()
+                    findCocktailByName(it)
                 }
                 return true
             }
@@ -64,6 +70,38 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("SUPERHERO_IMAGE", cocktail.imageURL)
         startActivity(intent)
 
+    }
+
+    private fun findCocktailByName(query: String) {
+
+        val service: CocktailAPICall = RetrofitProvider.getRetrofit()
+        //Llamada al segundo hilo
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val result = service.findCocktailByName(query)
+                runOnUiThread {
+                    if (!result.drinks.isNullOrEmpty()) {
+                            cocktailList = result.drinks
+                    } else {
+                        cocktailList = emptyList()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "No se encontraron cócteles",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    adapter.updateData(cocktailList)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    // Puedes mostrar un mensaje de error genérico al usuario si ocurre una excepción
+                    Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
     }
 
 }

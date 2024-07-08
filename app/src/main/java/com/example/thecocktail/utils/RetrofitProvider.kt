@@ -5,10 +5,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitProvider {
+
     companion object {
-        fun getRetrofit() : CocktailAPICall {
+        fun getRetrofit(): CocktailAPICall {
             val retrofit = Retrofit.Builder()
-                .baseUrl("www.thecocktaildb.com/api/json/v1/1/")
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

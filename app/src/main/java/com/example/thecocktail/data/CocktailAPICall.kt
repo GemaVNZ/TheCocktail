@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface CocktailAPICall {
     @GET ("search.php")
-    suspend fun findCocktailByName(@Query("s") query: String) : Call <CocktailResponse>
+    suspend fun findCocktailByName(@Query("s") query: String) : CocktailResponse
 
     @GET ("search.php")
     suspend fun listCocktailByLetter(@Query("f") firstLetter: String) : Call <CocktailResponse>

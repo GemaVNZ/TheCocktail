@@ -6,8 +6,15 @@
         android:id="@+id/menu_search"
         android:icon="@drawable/ic_search"
         android:title="@string/menu_search"
-        app:iconTint="@color/white"
+        app:iconTint="@color/black"
         app:showAsAction="collapseActionView|always"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_share"
+        android:title="@string/menu_share"
+        app:iconTint="@color/black"
+        app:showAsAction="collapseActionView|always"/>
 
 </menu>

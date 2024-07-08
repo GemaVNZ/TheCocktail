@@ -3,8 +3,9 @@ package com.example.thecocktail.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.thecocktail.DetailActivity
 import com.example.thecocktail.R
 import com.example.thecocktail.adapters.CocktailAdapter
 import com.example.thecocktail.data.Cocktail
@@ -28,6 +29,29 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerViewMain.adapter = adapter
         binding.recyclerViewMain.layoutManager = GridLayoutManager(this, 2)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_appbar, menu)
+
+        val searchViewItem = menu.findItem(R.id.menu_search)
+        val searchView = searchViewItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    TODO()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        return true
 
     }
 

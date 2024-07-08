@@ -3,6 +3,10 @@ package com.example.thecocktail.data
 import android.media.Image
 import com.google.gson.annotations.SerializedName
 
+
+data class CocktailResponse(
+    @SerializedName("drinks") val drinks: List<Cocktail>?
+)
 data class Cocktail (
 
     @SerializedName("idDrink") val id:Int,
@@ -15,16 +19,6 @@ data class Cocktail (
     val ingredients: List<Ingredient>) {
 
     }
-
-
-
-
-
-
-
-
-
-
 
 data class Ingredient (
     val name: String?,

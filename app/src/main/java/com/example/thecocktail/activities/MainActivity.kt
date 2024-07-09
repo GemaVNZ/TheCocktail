@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private var cocktailList: List<Cocktail> = emptyList()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewMain.adapter = adapter
         binding.recyclerViewMain.layoutManager = GridLayoutManager(this, 2)
 
+        randomCocktail()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -70,7 +72,8 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("COCKTAIL_ID", cocktail.id)
         intent.putExtra("COCKTAIL_NAME", cocktail.name)
         intent.putExtra("COCKTAIL_IMAGE", cocktail.imageURL)
-        intent.putExtra("COCKTAIL", cocktail)
+        intent.putExtra("COCKTAIL_INGREDIENTS", cocktail)
+        intent.putExtra("COCKTAIL_INSTRUCTION", cocktail.instruction)
         startActivity(intent)
 
     }
@@ -84,8 +87,38 @@ class MainActivity : AppCompatActivity() {
                 val result = service.findCocktailByName(query)
                 runOnUiThread {
                     if (!result.drinks.isNullOrEmpty()) {
-                            cocktailList = result.drinks
-                            adapter.updateData(cocktailList)
+                        cocktailList = result.drinks
+                        adapter.updateData(cocktailList)
+                    } else {
+                        cocktailList = emptyList()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "No se encontraron cócteles",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    // Puedes mostrar un mensaje de error genérico al usuario si ocurre una excepción
+                    Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+
+    private fun randomCocktail() {
+        val service: CocktailAPICall = RetrofitProvider.getRetrofit()
+        //Llamada al segundo hilo
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val result = service.randomCocktail()
+                runOnUiThread {
+                    if (!result.drinks.isNullOrEmpty()) {
+                        cocktailList = result.drinks
+                        adapter.updateData(cocktailList)
                     } else {
                         cocktailList = emptyList()
                         Toast.makeText(

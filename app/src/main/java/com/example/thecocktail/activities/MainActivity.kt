@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,6 +17,7 @@ import com.example.thecocktail.utils.RetrofitProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         adapter = CocktailAdapter(cocktailList){ position ->
             navigateToDetail(cocktailList[position])
         }
-
         binding.recyclerViewMain.adapter = adapter
         binding.recyclerViewMain.layoutManager = GridLayoutManager(this, 2)
 
@@ -40,40 +41,42 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-
-        val searchViewItem = menu.findItem(R.id.menu_search)
-        val searchView = searchViewItem.actionView as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let {
-                    findCocktailByName(it)
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
+        val searchItem = menu.findItem(R.id.menu_search)
+        initSearchView(searchItem)
         return true
+    }
+    private fun initSearchView(searchItem: MenuItem?) {
+        if (searchItem != null) {
+            val searchView = searchItem.actionView as SearchView
 
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let {
+                        findCocktailByName(it)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
+        }
     }
 
-
     private fun navigateToDetail(cocktail: Cocktail) {
-        //Toast.makeText(this, superhero.name, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, cocktail.name, Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("COCKTAIL_ID", cocktail.id)
         intent.putExtra("COCKTAIL_NAME", cocktail.name)
         intent.putExtra("COCKTAIL_IMAGE", cocktail.imageURL)
+        intent.putExtra("COCKTAIL", cocktail)
         startActivity(intent)
 
     }
 
+    //Función para buscar por el nombre del cóctel
     private fun findCocktailByName(query: String) {
-
         val service: CocktailAPICall = RetrofitProvider.getRetrofit()
         //Llamada al segundo hilo
         CoroutineScope(Dispatchers.IO).launch {
@@ -82,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (!result.drinks.isNullOrEmpty()) {
                             cocktailList = result.drinks
+                            adapter.updateData(cocktailList)
                     } else {
                         cocktailList = emptyList()
                         Toast.makeText(
@@ -90,8 +94,6 @@ class MainActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-
-                    adapter.updateData(cocktailList)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

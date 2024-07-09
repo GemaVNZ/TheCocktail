@@ -2,4 +2,8 @@
     <string name="app_name">TheCocktail</string>
     <string name="menu_search">menu_search</string>
     <string name="menu_share">menu_share</string>
+    <string name="cocktailname">Cocktail_name</string>
+    <string name="cocktailcategory">Cocktail_category</string>
+    <string name="cocktailalcoholic">Cocktail_alcoholic</string>
+    <string name="cocktailglass">Cocktail_glass</string>
 </resources>

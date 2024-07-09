@@ -2,8 +2,18 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TheCocktail" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+        <item name="colorPrimary" type="color">@color/azul_primaryColor</item>
+        <item name="colorPrimaryVariant" type="color">@color/gris_secondaryColor</item>
+        <item name="colorOnPrimary" type="color">@color/azul_primaryColor</item>
+
+    <!-- Secondary brand color. -->
+    <item name="colorSecondary" type="color">@color/color_back</item>
+    <item name="colorSecondaryVariant" type="color">@color/color_back</item>
+    <item name="colorOnSecondary" type="color">@color/color_back</item>
+
+</style>
 
     <style name="Theme.TheCocktail" parent="Base.Theme.TheCocktail" />
+
+
 </resources>

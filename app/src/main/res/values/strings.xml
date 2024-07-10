@@ -7,4 +7,6 @@
     <string name="cocktailalcoholic">Cocktail_alcoholic</string>
     <string name="cocktailglass">Cocktail_glass</string>
     <string name="favorite_button">favorite_button</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="instructions">Instructions:</string>
 </resources>

@@ -125,17 +125,49 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ingredients"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/cocktail_ingredients"
                 android:layout_width="match_parent"
-                android:layout_height="155dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:paddingTop="8dp"
                 android:textSize="16sp"
-                android:text="Ingredients:"
                 tools:text="Ingredients" />
+        </LinearLayout>
+
+        <!-- Instrucciones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instructions"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/cocktailInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:textSize="16sp"
+                tools:text="Instructions" />
+        </LinearLayout>
+    </LinearLayout>
+
 
             <!-- Nadie sabe
 
@@ -150,25 +182,5 @@
                 tools:text="Measures" /> -->
 
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cocktailInstructions"
-                android:layout_width="match_parent"
-                android:layout_height="155dp"
-                android:layout_weight="1"
-                android:paddingTop="8dp"
-                android:textSize="16sp"
-                android:text="Instructions:"
-                tools:text="Instructions" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,6 +47,18 @@ class MainActivity : AppCompatActivity() {
         initSearchView(searchItem)
         return true
     }
+
+    //Añado el menú con el item de compartir
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_share -> {
+                shareCocktail()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
     private fun initSearchView(searchItem: MenuItem?) {
         if (searchItem != null) {
             val searchView = searchItem.actionView as SearchView
@@ -139,4 +151,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Función para compartir
+    private fun shareCocktail() {
+        if (cocktailList.isNotEmpty()) {
+            val currentCocktail = cocktailList[0] // Obtener el primer cóctel de la lista, o el cóctel seleccionado
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_SUBJECT, "Check out this cocktail!")
+                putExtra(Intent.EXTRA_TEXT, "Check out this cocktail: ${currentCocktail.name}")
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share via"))
+        } else {
+            Toast.makeText(this, "No cocktail to share", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
+
+

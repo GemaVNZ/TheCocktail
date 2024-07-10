@@ -14,13 +14,13 @@ import com.squareup.picasso.Picasso
 class DetailActivity : AppCompatActivity() {
 
     //Definimos los diferentes objetos de la clase.
-    /*companion object {
+    companion object {
         const val EXTRA_ID = "COCKTAIL_ID"
         const val EXTRA_NAME = "COCKTAIL_NAME"
         const val EXTRA_IMAGE = "COCKTAIL_IMAGE"
         const val EXTRA_COCKTAIL = "COCKTAIL_INGREDIENTS"
         const val EXTRA_INSTRUCTION = "COCKTAIL_INSTRUCTION"
-    }*/
+    }
     //Funciones para declarar los datos que vamos a utilizar y con que vista.
     private lateinit var cocktail: Cocktail
     private lateinit var binding: ActivityDetailBinding
@@ -30,7 +30,7 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //val id = intent.getIntExtra("COCKTAIL_ID", -1)
+        val id = intent.getIntExtra("COCKTAIL_ID", -1)
         cocktail = intent.getParcelableExtra("COCKTAIL_INGREDIENTS")!!
         val name = intent.getStringExtra("COCKTAIL_NAME")
         val image = intent.getStringExtra("COCKTAIL_IMAGE")

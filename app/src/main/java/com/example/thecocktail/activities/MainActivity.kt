@@ -17,7 +17,6 @@ import com.example.thecocktail.utils.RetrofitProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +37,10 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewMain.layoutManager = GridLayoutManager(this, 2)
         binding.toolbar
 
-        setupFilterButtons()
+        binding.btnFilter.setOnClickListener {
+            navigateToListActivity()
+        }
+
         randomCocktail()
     }
 
@@ -95,35 +97,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setupFilterButtons() {
-        binding.btnCategory.setOnClickListener {
-            navigateToCategoryActivity()
-        }
-
-        binding.btnType.setOnClickListener {
-            navigateToTypeActivity()
-        }
-
-        binding.btnGlass.setOnClickListener {
-            navigateToGlassActivity()
-        }
-    }
-
-    private fun navigateToCategoryActivity() {
-        val intent = Intent(this, CategoryActivity::class.java)
+    private fun navigateToListActivity() {
+        val intent = Intent(this, ListActivity::class.java)
         startActivity(intent)
     }
-
-    private fun navigateToTypeActivity() {
-        val intent = Intent(this, TypeActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun navigateToGlassActivity() {
-        val intent = Intent(this, GlassActivity::class.java)
-        startActivity(intent)
-    }
-
 
     //Función para buscar por el nombre del cóctel
     private fun findCocktailByName(query: String) {

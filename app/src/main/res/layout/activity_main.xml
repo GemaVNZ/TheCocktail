@@ -31,31 +31,14 @@
                             android:orientation="horizontal">
 
                                 <Button
-                                    android:id="@+id/btnCategory"
+                                    android:id="@+id/btnFilter"
                                     style="?attr/borderlessButtonStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:text="Category"
+                                    android:text="Filtro"
                                     android:textColor="@android:color/white" />
 
-                                <Button
-                                    android:id="@+id/btnType"
-                                    style="?attr/borderlessButtonStyle"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:text="Type"
-                                    android:textColor="@android:color/white" />
-
-                                <Button
-                                    android:id="@+id/btnGlass"
-                                    style="?attr/borderlessButtonStyle"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:text="Glass"
-                                    android:textColor="@android:color/white" />
                         </LinearLayout>
 
                 </androidx.appcompat.widget.Toolbar>

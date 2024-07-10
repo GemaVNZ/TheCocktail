@@ -18,7 +18,7 @@
             android:name=".activities.GlassActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CategoryActivity"
+            android:name=".activities.ListActivity"
             android:exported="false" />
         <activity
             android:name=".activities.TypeActivity"

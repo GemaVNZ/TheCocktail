@@ -26,21 +26,23 @@ class MainActivity : AppCompatActivity() {
     private var cocktailList: List<Cocktail> = emptyList()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = CocktailAdapter(cocktailList){ position ->
+        adapter = CocktailAdapter(cocktailList) { position ->
             navigateToDetail(cocktailList[position])
         }
         binding.recyclerViewMain.adapter = adapter
         binding.recyclerViewMain.layoutManager = GridLayoutManager(this, 2)
+        binding.toolbar
 
+        setupFilterButtons()
         randomCocktail()
     }
 
+    // Menú para crear la búsqueda
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val searchItem = menu.findItem(R.id.menu_search)
@@ -55,9 +57,12 @@ class MainActivity : AppCompatActivity() {
                 shareCocktail()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    //Menú para hacer la búsqueda
     private fun initSearchView(searchItem: MenuItem?) {
         if (searchItem != null) {
             val searchView = searchItem.actionView as SearchView
@@ -77,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Función para mostrar en el detalle todos los datos del cocktail
     private fun navigateToDetail(cocktail: Cocktail) {
         //Toast.makeText(this, cocktail.name, Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailActivity::class.java)
@@ -88,6 +94,36 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
 
     }
+
+    private fun setupFilterButtons() {
+        binding.btnCategory.setOnClickListener {
+            navigateToCategoryActivity()
+        }
+
+        binding.btnType.setOnClickListener {
+            navigateToTypeActivity()
+        }
+
+        binding.btnGlass.setOnClickListener {
+            navigateToGlassActivity()
+        }
+    }
+
+    private fun navigateToCategoryActivity() {
+        val intent = Intent(this, CategoryActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToTypeActivity() {
+        val intent = Intent(this, TypeActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToGlassActivity() {
+        val intent = Intent(this, GlassActivity::class.java)
+        startActivity(intent)
+    }
+
 
     //Función para buscar por el nombre del cóctel
     private fun findCocktailByName(query: String) {
@@ -120,6 +156,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Función para que aparezca 1 cócktail random en el inicio
     private fun randomCocktail() {
         val service: CocktailAPICall = RetrofitProvider.getRetrofit()
         //Llamada al segundo hilo
@@ -153,7 +190,8 @@ class MainActivity : AppCompatActivity() {
     //Función para compartir
     private fun shareCocktail() {
         if (cocktailList.isNotEmpty()) {
-            val currentCocktail = cocktailList[0] // Obtener el primer cóctel de la lista, o el cóctel seleccionado
+            val currentCocktail =
+                cocktailList[0] // Obtener el primer cóctel de la lista, o el cóctel seleccionado
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_SUBJECT, "Check out this cocktail!")
@@ -165,6 +203,105 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "No cocktail to share", Toast.LENGTH_SHORT).show()
         }
     }
+
 }
+
+
+    /*private fun filterByCategory(query: String) {
+        val service: CocktailAPICall = RetrofitProvider.getRetrofit()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val result = service.filterByCategory(query)
+                runOnUiThread {
+                    if (!result.drinks.isNullOrEmpty()) {
+                        cocktailList = result.drinks
+                        adapter.updateData(cocktailList)
+                    } else {
+                        cocktailList = emptyList()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "No se encontraron cócteles",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun filterByType(query: String) {
+        val service: CocktailAPICall = RetrofitProvider.getRetrofit()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val result = service.filterByCategory(query)
+                runOnUiThread {
+                    if (!result.drinks.isNullOrEmpty()) {
+                        cocktailList = result.drinks
+                        adapter.updateData(cocktailList)
+                    } else {
+                        cocktailList = emptyList()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "No se encontraron cócteles",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun filterByGlass(query: String) {
+        val service: CocktailAPICall = RetrofitProvider.getRetrofit()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val result = service.filterByGlass(query)
+                runOnUiThread {
+                    if (!result.drinks.isNullOrEmpty()) {
+                        cocktailList = result.drinks
+                        adapter.updateData(cocktailList)
+                    } else {
+                        cocktailList = emptyList()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "No se encontraron cócteles",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }*/
+
 
 

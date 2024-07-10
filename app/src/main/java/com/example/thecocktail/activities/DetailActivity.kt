@@ -14,13 +14,13 @@ import com.squareup.picasso.Picasso
 class DetailActivity : AppCompatActivity() {
 
     //Definimos los diferentes objetos de la clase.
-    companion object {
+    /*companion object {
         const val EXTRA_ID = "COCKTAIL_ID"
         const val EXTRA_NAME = "COCKTAIL_NAME"
         const val EXTRA_IMAGE = "COCKTAIL_IMAGE"
         const val EXTRA_COCKTAIL = "COCKTAIL_INGREDIENTS"
         const val EXTRA_INSTRUCTION = "COCKTAIL_INSTRUCTION"
-    }
+    }*/
     //Funciones para declarar los datos que vamos a utilizar y con que vista.
     private lateinit var cocktail: Cocktail
     private lateinit var binding: ActivityDetailBinding
@@ -50,18 +50,10 @@ class DetailActivity : AppCompatActivity() {
             title = cocktail.name
         }
 
-        //initActionBar()
-
     Picasso.get().load(image).into(binding.imageViewCocktail)
 
     loadData(image,instruction)
 }
-
-//    private fun initActionBar () {
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.title = cocktail.name
-//        supportActionBar?.setIcon(R.drawable.ic_share)
-//    }
 
     private fun loadData(image: String?, instruction: String?) {
         try {

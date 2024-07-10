@@ -26,15 +26,15 @@
                 android:scaleType="centerCrop"
                 android:src="@color/black" />
 
-            <ImageButton
-                android:id="@+id/btnFavorite"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="end|top"
-                android:layout_margin="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
                 android:src="@drawable/ic_favorite_border"
-                app:iconTint="@color/white"
+                app:backgroundTint="@color/white"
+                app:srcCompat="@drawable/ic_favorite_border"
                 android:contentDescription="@string/favorite_button"/>
 
         </FrameLayout>
@@ -158,6 +158,9 @@
                 android:textStyle="bold"
                 android:textSize="18sp" />
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
             <TextView
                 android:id="@+id/cocktailInstructions"
                 android:layout_width="match_parent"
@@ -165,7 +168,11 @@
                 android:paddingTop="8dp"
                 android:textSize="16sp"
                 tools:text="Instructions" />
+
+        </ScrollView>
+
         </LinearLayout>
+
     </LinearLayout>
 
 

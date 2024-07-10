@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Añado el menú con el item de compartir
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_share -> {
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToDetail(cocktail: Cocktail) {
-        Toast.makeText(this, cocktail.name, Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, cocktail.name, Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("COCKTAIL_ID", cocktail.id)
         intent.putExtra("COCKTAIL_NAME", cocktail.name)

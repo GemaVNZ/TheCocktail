@@ -3,6 +3,7 @@ package com.example.thecocktail.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.thecocktail.R
@@ -47,7 +48,6 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = cocktail.name
-            setIcon(R.drawable.ic_share)
         }
 
         //initActionBar()
@@ -93,6 +93,11 @@ class DetailActivity : AppCompatActivity() {
             Toast.makeText(this, "Error loading cocktail data", Toast.LENGTH_SHORT).show()
             finish()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
 

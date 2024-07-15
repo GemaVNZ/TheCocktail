@@ -15,6 +15,12 @@
         android:theme="@style/Theme.TheCocktail"
         tools:targetApi="31">
         <activity
+            android:name=".activities.FunctionCall"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.FavoriteActivity"
             android:exported="false" />
         <activity

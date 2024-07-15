@@ -1,17 +1,20 @@
 package com.example.thecocktail.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.thecocktail.R
+import com.example.thecocktail.adapters.CocktailAdapter
 import com.example.thecocktail.data.Cocktail
 import com.example.thecocktail.databinding.ActivityDetailBinding
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 
 class DetailActivity : AppCompatActivity() {
@@ -24,7 +27,6 @@ class DetailActivity : AppCompatActivity() {
         const val EXTRA_COCKTAIL = "COCKTAIL_INGREDIENTS"
         const val EXTRA_INSTRUCTION = "COCKTAIL_INSTRUCTION"
         const val PREFS_NAME = "favorites"
-        const val PREFIX_FAVORITE = "favorite_"
 
     }
     //Funciones para declarar los datos que vamos a utilizar y con que vista.
@@ -39,17 +41,11 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val id = intent.getIntExtra("COCKTAIL_ID", -1)
+
         cocktail = intent.getParcelableExtra("COCKTAIL_INGREDIENTS")!!
         val name = intent.getStringExtra("COCKTAIL_NAME")
         val image = intent.getStringExtra("COCKTAIL_IMAGE")
-
         val instruction = intent.getStringExtra("COCKTAIL_INSTRUCTION")
-        if(instruction !=null) {
-            Log.d("DetailActivity", "Instruction received from intent: $instruction")
-        } else {
-            Log.d("DetailActivity", "Instruction is null")
-        }
 
 
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -59,18 +55,14 @@ class DetailActivity : AppCompatActivity() {
             title = cocktail.name
         }
 
-    Picasso.get().load(image).into(binding.imageViewCocktail)
-
+        Picasso.get().load(image).into(binding.imageViewCocktail)
         loadData(image,instruction)
-
         isFavorite = isCocktailFavorite(cocktail.id.toString())
-
         updateFavoriteButtonState()
 
         binding.fabFavorite.setOnClickListener {
             changeFavoriteState()
         }
-
 
 }
 
@@ -103,17 +95,23 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showRemoveConfirmation(cocktailId: String) {
         val builder = AlertDialog.Builder(this)
+        val inputLayout = TextInputLayout(this)
+        val input = TextInputEditText(this)
+
+        inputLayout.hint ="Comment"
+        inputLayout.addView(input)
+
         builder.apply {
             setTitle("Remove from Favorites")
             setMessage("Are you sure you want to remove this cocktail from favorites?")
-            setPositiveButton("Yes") { dialog, which ->
-                val editor = sharedPreferences.edit()
-                editor.remove(cocktailId)
-                editor.apply()
+            setView(inputLayout)
+            setPositiveButton("Yes") { _, _ ->
+                val comment = input.text.toString()
+                removeFavoriteCocktail(cocktailId)
                 updateFavoriteButtonState()
                 Toast.makeText(this@DetailActivity, "Removed from favorites", Toast.LENGTH_SHORT).show()
             }
-            setNegativeButton("Cancel") { dialog, which ->
+            setNegativeButton("Cancel") { dialog, _->
                 dialog.cancel()
                 isFavorite = true
                 updateFavoriteButtonState()
@@ -166,10 +164,9 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    //app:actionViewClass="androidx.appcompat.widget.SearchView"
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_detail, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -181,10 +178,23 @@ class DetailActivity : AppCompatActivity() {
                 return true
             }
 
+            R.id.menu_share -> {
+                shareCocktail()
+                return true
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
 
-
+    private fun shareCocktail() {
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_SUBJECT, "Check out this cocktail!")
+                putExtra(Intent.EXTRA_TEXT, "Check out this cocktail: ${cocktail.name}")
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share via"))
+        }
 
 }

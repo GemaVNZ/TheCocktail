@@ -18,12 +18,4 @@ interface CocktailAPICall {
     @GET("random.php")
     suspend fun randomCocktail() : CocktailResponse
 
-    @GET ("filter.php")
-
-    suspend fun listAllIngredients(@Query("i") query: String) : CocktailResponse
-
-//    //Función para buscar por la primera letra
-//    @GET("search.php")
-//    suspend fun listCocktailByLetter(@Query("f") firstLetter: String): Call<CocktailResponse>
-
 }

@@ -23,6 +23,7 @@
                 android:id="@+id/imageViewCocktail"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:contentDescription="@string/image_cocktail"
                 android:scaleType="centerCrop"
                 android:src="@color/black" />
 
@@ -42,6 +43,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginVertical="16dp">
 
             <LinearLayout
@@ -54,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category:" />
+                    android:text="@string/category" />
 
                 <TextView
                     android:id="@+id/cocktail_categoryTextView"
@@ -81,7 +83,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Alcoholic:" />
+                    android:text="@string/alcoholic" />
 
                 <TextView
                     android:id="@+id/cocktail_alcoholicTextView"
@@ -108,7 +110,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Glass:" />
+                    android:text="@string/glass" />
 
                 <TextView
                     android:id="@+id/cocktail_glassTextView"

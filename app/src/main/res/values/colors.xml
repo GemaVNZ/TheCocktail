@@ -7,4 +7,16 @@
     <color name="gris_secondaryColor">#758694</color>
     <color name="color_tarea">#F7E7DC</color>
     <color name="color_back">#FFF8F3</color>
+
+    <color name="color_optional">#EEEDEB</color>
+    <color name="color_optional2">#E6B9A6</color>
+    <color name="color_optional3">#939185</color>
+    <color name="color_optional4">#2F3645</color>
+
+    <color name="color_optional5">#85586F</color>
+    <color name="color_optional6">#A7A7A7</color>
+
+
+    <color name="color_optional8">#BDBDBD</color>
+
 </resources>

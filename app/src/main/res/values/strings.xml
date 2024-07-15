@@ -2,13 +2,17 @@
     <string name="app_name">TheCocktail</string>
     <string name="menu_search">menu_search</string>
     <string name="menu_share">menu_share</string>
-    <string name="cocktailname">Cocktail_name</string>
-    <string name="cocktailcategory">Cocktail_category</string>
-    <string name="cocktailalcoholic">Cocktail_alcoholic</string>
-    <string name="cocktailglass">Cocktail_glass</string>
     <string name="favorite_button">favorite_button</string>
     <string name="ingredients">Ingredients:</string>
     <string name="instructions">Instructions:</string>
     <string name="menu_favorite">menu_favorite</string>
     <string name="search">Search</string>
+    <string name="cocktail_name">Cocktail_name</string>
+    <string name="image">cocktail_image</string>
+    <string name="descargando_los_datos_de_los_cocktails">Descargando los datos de los cocktails...</string>
+    <string name="su_aplicaci_n_se_est_actualizando_en_breve_tendr_disponible_todo_el_contenido">Su aplicación se está actualizando, en breve tendrá disponible todo el contenido</string>
+    <string name="category">Category:</string>
+    <string name="alcoholic">Alcoholic:</string>
+    <string name="glass">Glass:</string>
+    <string name="image_cocktail">imageViewCocktail</string>
 </resources>

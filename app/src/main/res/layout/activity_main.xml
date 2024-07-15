@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.MainActivity"
+    android:background="@color/color_optional">
 
         <!-- Botones de filtro -->
         <LinearLayout
@@ -21,20 +22,26 @@
                     android:id="@+id/descargaTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Descargando los datos de los cocktails..."
+                    android:text="@string/descargando_los_datos_de_los_cocktails"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Su aplicación se está actualizando, en breve tendrá disponible todo el contenido"
+                    android:text="@string/su_aplicaci_n_se_est_actualizando_en_breve_tendr_disponible_todo_el_contenido"
                     android:layout_marginTop="10dp"/>
 
                 <ProgressBar
+                    android:id="@+id/progressBar"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginTop="10dp"/>
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressBackgroundTint="@color/black"
+                    android:progressTint="@color/gris_secondaryColor"
+                    android:max="100"
+                    android:progress="0"
+                    android:indeterminate="false"/>
         </LinearLayout>
 
 </FrameLayout>

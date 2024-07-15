@@ -76,17 +76,17 @@ class DetailActivity : AppCompatActivity() {
 
     // Función para actualizar visualmente el botón de favorito
     private fun changeFavoriteState() {
-        isFavorite = !isFavorite
+        val cocktailId = cocktail.id.toString()
+        isFavorite = !isFavorite // Cambia el estado antes de actualizar la interfaz
 
         if (isFavorite) {
-            saveFavoriteCocktail(cocktail.id.toString())
+            saveFavoriteCocktail(cocktailId)
             Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
         } else {
-            removeFavoriteCocktail(cocktail.id.toString())
-            Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show()
+            showRemoveConfirmation(cocktailId) // Muestra el diálogo de confirmación para eliminar
         }
 
-        updateFavoriteButtonState()
+        updateFavoriteButtonState() // Actualiza visualmente el botón de favoritos
     }
 
     private fun saveFavoriteCocktail(cocktailId: String) {
@@ -96,6 +96,12 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun removeFavoriteCocktail(cocktailId: String) {
+        val editor = sharedPreferences.edit()
+        editor.remove(cocktailId)
+        editor.apply()
+    }
+
+    private fun showRemoveConfirmation(cocktailId: String) {
         val builder = AlertDialog.Builder(this)
         builder.apply {
             setTitle("Remove from Favorites")
@@ -104,11 +110,13 @@ class DetailActivity : AppCompatActivity() {
                 val editor = sharedPreferences.edit()
                 editor.remove(cocktailId)
                 editor.apply()
-                Toast.makeText(this@DetailActivity, "Removed from favorites", Toast.LENGTH_SHORT).show()
                 updateFavoriteButtonState()
+                Toast.makeText(this@DetailActivity, "Removed from favorites", Toast.LENGTH_SHORT).show()
             }
             setNegativeButton("Cancel") { dialog, which ->
                 dialog.cancel()
+                isFavorite = true
+                updateFavoriteButtonState()
             }
             show()
         }

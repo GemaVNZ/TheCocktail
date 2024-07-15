@@ -175,19 +175,4 @@
 
     </LinearLayout>
 
-
-            <!-- Nadie sabe
-
-            <TextView
-                android:id="@+id/cocktail_measures"
-                android:layout_width="match_parent"
-                android:layout_height="155dp"
-                android:layout_weight="1"
-                android:paddingTop="8dp"
-                android:textSize="16sp"
-                android:text="Measures:"
-                tools:text="Measures" /> -->
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

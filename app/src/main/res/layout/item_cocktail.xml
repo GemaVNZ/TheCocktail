@@ -35,16 +35,5 @@
 
     </FrameLayout>
 
-        <!-- Contenido del cocktail
-            <ImageView
-            android:id="@+id/favoriteImageView"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_favorite" /> -->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 

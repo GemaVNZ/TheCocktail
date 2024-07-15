@@ -1,11 +1,14 @@
 package com.example.thecocktail.activities
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.thecocktail.R
 import com.example.thecocktail.data.Cocktail
 import com.example.thecocktail.databinding.ActivityDetailBinding
@@ -20,10 +23,16 @@ class DetailActivity : AppCompatActivity() {
         const val EXTRA_IMAGE = "COCKTAIL_IMAGE"
         const val EXTRA_COCKTAIL = "COCKTAIL_INGREDIENTS"
         const val EXTRA_INSTRUCTION = "COCKTAIL_INSTRUCTION"
+        const val PREFS_NAME = "favorites"
+        const val PREFIX_FAVORITE = "favorite_"
+
     }
     //Funciones para declarar los datos que vamos a utilizar y con que vista.
     private lateinit var cocktail: Cocktail
     private lateinit var binding: ActivityDetailBinding
+    private var isFavorite: Boolean = false
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +51,8 @@ class DetailActivity : AppCompatActivity() {
             Log.d("DetailActivity", "Instruction is null")
         }
 
-        //Log.d("DetailActivity", "Received instruction: $instruction")
-        //Log.d("DetailActivity", "Cocktail instruction: ${cocktail.instruction}")
+
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -52,8 +61,70 @@ class DetailActivity : AppCompatActivity() {
 
     Picasso.get().load(image).into(binding.imageViewCocktail)
 
-    loadData(image,instruction)
+        loadData(image,instruction)
+
+        isFavorite = isCocktailFavorite(cocktail.id.toString())
+
+        updateFavoriteButtonState()
+
+        binding.fabFavorite.setOnClickListener {
+            changeFavoriteState()
+        }
+
+
 }
+
+    // Función para actualizar visualmente el botón de favorito
+    private fun changeFavoriteState() {
+        isFavorite = !isFavorite
+
+        if (isFavorite) {
+            saveFavoriteCocktail(cocktail.id.toString())
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
+        } else {
+            removeFavoriteCocktail(cocktail.id.toString())
+            Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show()
+        }
+
+        updateFavoriteButtonState()
+    }
+
+    private fun saveFavoriteCocktail(cocktailId: String) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(cocktailId, true)
+        editor.apply()
+    }
+
+    private fun removeFavoriteCocktail(cocktailId: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.apply {
+            setTitle("Remove from Favorites")
+            setMessage("Are you sure you want to remove this cocktail from favorites?")
+            setPositiveButton("Yes") { dialog, which ->
+                val editor = sharedPreferences.edit()
+                editor.remove(cocktailId)
+                editor.apply()
+                Toast.makeText(this@DetailActivity, "Removed from favorites", Toast.LENGTH_SHORT).show()
+                updateFavoriteButtonState()
+            }
+            setNegativeButton("Cancel") { dialog, which ->
+                dialog.cancel()
+            }
+            show()
+        }
+    }
+
+    private fun isCocktailFavorite(cocktailId: String): Boolean {
+        return sharedPreferences.contains(cocktailId)
+    }
+
+    private fun updateFavoriteButtonState() {
+        if (isFavorite) {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite)
+        } else {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_border)
+        }
+    }
 
     private fun loadData(image: String?, instruction: String?) {
         try {
@@ -87,8 +158,10 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    //app:actionViewClass="androidx.appcompat.widget.SearchView"
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_detail, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -99,8 +172,11 @@ class DetailActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 
 }

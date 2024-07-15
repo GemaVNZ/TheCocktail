@@ -21,6 +21,7 @@ import com.example.thecocktail.utils.RetrofitProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ListActivity : AppCompatActivity() {
@@ -38,11 +39,11 @@ class ListActivity : AppCompatActivity() {
         adapter = CocktailAdapter(cocktailList) { position ->
             navigateToDetail(cocktailList[position])
         }
+
         binding.recyclerViewMain.adapter = adapter
         binding.recyclerViewMain.layoutManager = GridLayoutManager(this, 2)
 
-
-        randomCocktail()
+        randomCocktails()
     }
 
     // Menú para crear la búsqueda
@@ -130,15 +131,24 @@ class ListActivity : AppCompatActivity() {
     }
 
     //Función para que aparezca 1 cócktail random en el inicio
-    private fun randomCocktail() {
+    private fun randomCocktails() {
         val service: CocktailAPICall = RetrofitProvider.getRetrofit()
+        val numberOfCocktails = 10 // Número de cócteles aleatorios que deseas obtener
+        val randomCocktailList = mutableListOf<Cocktail>()
+
         //Llamada al segundo hilo
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val result = service.randomCocktail()
-                runOnUiThread {
+                repeat(numberOfCocktails) {
+                    val result = service.randomCocktail()
                     if (!result.drinks.isNullOrEmpty()) {
-                        cocktailList = result.drinks
+                        randomCocktailList.addAll(result.drinks)
+                    }
+                }
+
+                runOnUiThread {
+                    if (randomCocktailList.isNotEmpty()) {
+                        cocktailList = randomCocktailList
                         adapter.updateData(cocktailList)
                     } else {
                         cocktailList = emptyList()
@@ -178,70 +188,3 @@ class ListActivity : AppCompatActivity() {
     }
 
 }
-
-
-    /*private fun navigateToDetail(cocktail: Cocktail) {
-        Toast.makeText(this, cocktail.name, Toast.LENGTH_LONG).show()
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("COCKTAIL_ID", cocktail.id)
-        intent.putExtra("COCKTAIL_NAME", cocktail.name)
-        intent.putExtra("COCKTAIL_IMAGE", cocktail.imageURL)
-        intent.putExtra("COCKTAIL_INGREDIENTS", cocktail)
-        intent.putExtra("COCKTAIL_INSTRUCTION", cocktail.instruction)
-        startActivity(intent)
-
-    }
-
-    /*private fun filterByCategory(query: String) {
-        val service: CocktailAPICall = RetrofitProvider.getRetrofit()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val result = service.filterByCategory(query)
-                runOnUiThread {
-                    if (!result.drinks.isNullOrEmpty()) {
-                        cocktailList = result.drinks
-                        adapter.updateData(cocktailList)
-                    } else {
-                        cocktailList = emptyList()
-                        Toast.makeText(
-                            this@ListActivity,
-                            "No se encontraron cócteles",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                runOnUiThread {
-                    Toast.makeText(
-                        this@ListActivity,
-                        "Error: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
-    /*private fun navigateToDetail(cocktail: Cocktail) {
-        // Aquí puedes navegar a la DetailActivity o realizar cualquier otra acción al seleccionar un cóctel
-        val intent = Intent(this, DetailActivity::class.java).apply {
-            putExtra("COCKTAIL_ID", cocktail.id)
-            putExtra("COCKTAIL_NAME", cocktail.name)
-            putExtra("COCKTAIL_IMAGE", cocktail.imageURL)
-            putExtra("COCKTAIL_INGREDIENTS", cocktail)
-            putExtra("COCKTAIL_INSTRUCTION", cocktail.instruction)
-        }
-        startActivity(intent)
-    }*/
-    private fun navigateToDetail(cocktail: Cocktail) {
-        Toast.makeText(this, cocktail.name, Toast.LENGTH_LONG).show()
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("COCKTAIL_ID", cocktail.id)
-        intent.putExtra("COCKTAIL_NAME", cocktail.name)
-        intent.putExtra("COCKTAIL_IMAGE", cocktail.imageURL)
-        intent.putExtra("COCKTAIL_INGREDIENTS", cocktail)
-        intent.putExtra("COCKTAIL_INSTRUCTION", cocktail.instruction)
-        startActivity(intent)
-
-    }
-}*/

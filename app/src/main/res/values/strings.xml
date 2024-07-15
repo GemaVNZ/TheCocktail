@@ -9,4 +9,6 @@
     <string name="favorite_button">favorite_button</string>
     <string name="ingredients">Ingredients:</string>
     <string name="instructions">Instructions:</string>
+    <string name="menu_favorite">menu_favorite</string>
+    <string name="search">Search</string>
 </resources>

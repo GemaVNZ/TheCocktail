@@ -1,6 +1,8 @@
 # The Cocktail
 
-The Cocktail es una aplicación basada en una API que contiene diversa información sobre diferentes tipos de cócteles. La aplicación permite a los usuarios explorar, buscar y gestionar sus cócteles favoritos de una manera fácil e intuitiva.
+The Cocktail es una aplicación basada en una API que contiene diversa información sobre diferentes tipos de cócteles. 
+
+La aplicación permite a los usuarios explorar, buscar y gestionar sus cócteles favoritos de una manera fácil e intuitiva.
 
 ## Características
 

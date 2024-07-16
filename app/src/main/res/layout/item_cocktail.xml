@@ -31,7 +31,7 @@
             android:textSize="24sp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:background="@color/gris_secondaryColor" />
+            android:background="@color/color_optional3" />
 
     </FrameLayout>
 

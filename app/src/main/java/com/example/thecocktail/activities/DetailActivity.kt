@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.thecocktail.R
-import com.example.thecocktail.adapters.CocktailAdapter
 import com.example.thecocktail.data.Cocktail
 import com.example.thecocktail.databinding.ActivityDetailBinding
 import com.google.android.material.textfield.TextInputEditText
@@ -56,7 +56,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         Picasso.get().load(image).into(binding.imageViewCocktail)
-        loadData(image,instruction)
+        loadData(instruction)
         isFavorite = isCocktailFavorite(cocktail.id.toString())
         updateFavoriteButtonState()
 
@@ -95,10 +95,20 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showRemoveConfirmation(cocktailId: String) {
         val builder = AlertDialog.Builder(this)
-        val inputLayout = TextInputLayout(this)
-        val input = TextInputEditText(this)
+        val inputLayout = TextInputLayout(this).apply {
+            hint = "Comment"
+            setPadding(16, 16, 16, 16)
+        }
 
-        inputLayout.hint ="Comment"
+        val input = TextInputEditText(this).apply {
+            isSingleLine = true
+            setPadding(32, 32, 32, 32)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+
         inputLayout.addView(input)
 
         builder.apply {
@@ -132,7 +142,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadData(image: String?, instruction: String?) {
+    private fun loadData(instruction: String?) {
         try {
             binding.apply {
                 cocktailCategoryTextView.text = cocktail.category

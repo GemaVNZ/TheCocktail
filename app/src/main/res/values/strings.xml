@@ -10,7 +10,7 @@
     <string name="cocktail_name">Cocktail_name</string>
     <string name="image">cocktail_image</string>
     <string name="descargando_los_datos_de_los_cocktails">Descargando los datos de los cocktails...</string>
-    <string name="su_aplicaci_n_se_est_actualizando_en_breve_tendr_disponible_todo_el_contenido">Su aplicación se está actualizando, en breve tendrá disponible todo el contenido</string>
+    <string name="su_aplicaci_n_se_est_actualizando_en_breve_tendr_disponible_todo_el_contenido">Actualizando, en breve tendrá disponible todo el contenido</string>
     <string name="category">Category:</string>
     <string name="alcoholic">Alcoholic:</string>
     <string name="glass">Glass:</string>

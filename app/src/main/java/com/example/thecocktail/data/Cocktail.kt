@@ -1,8 +1,6 @@
 package com.example.thecocktail.data
 
-import android.media.Image
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -187,21 +185,4 @@ data class Cocktail (
         }
     }
 
-//    data class CategoryListResponse(val drinks: List<Category>)
-//
-//    data class GlassListResponse(val drinks: List<Glass>)
-//
-//    data class IngredientListResponse(val drinks: List<Ingredient>)
-//
-//    data class AlcoholicListResponse(val drinks: List<Alcoholic>)
-//
-//
-//    data class Category(val strCategory: String)
-//
-//    data class Glass(val strGlass: String)
-//
-//    data class Ingredient(val strIngredient1: String)
-//
-//    data class Alcoholic(val strAlcoholic: String)
 }
-

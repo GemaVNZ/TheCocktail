@@ -10,10 +10,6 @@ interface CocktailAPICall {
     @GET("search.php")
     suspend fun findCocktailByName(@Query("s") query: String): CocktailResponse
 
-    //Función para buscar el cocktail por el ingrediente
-    @GET("search.php")
-    suspend fun ingredientscocktailByName(@Query("i") query: String): Call<CocktailResponse>
-
     //Función para buscar un cocktail aleatorio
     @GET("random.php")
     suspend fun randomCocktail() : CocktailResponse

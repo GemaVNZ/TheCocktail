@@ -77,4 +77,4 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## Contacto
 
-Para cualquier consulta, por favor contacta a [tuemail@ejemplo.com](gemavnz@gmail.com).
+Para cualquier consulta, por favor contacta a [gemavnz@gmail.com](gemavnz@gmail.com).
